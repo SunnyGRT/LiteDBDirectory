@@ -44,7 +44,7 @@ namespace Lucene.Net.Store.LiteDbDirectory
             }
             else
             {
-                using (LiteFileStream fileStream = _db.FileStorage.OpenWrite(_name, _name))
+                using (LiteFileStream<string> fileStream = _db.FileStorage.OpenWrite(_name, _name))
                 {
                     //Console.WriteLine($"Opened a new file:{_name} to write.");
                     fileStream.Write(segment, 0, len);

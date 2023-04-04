@@ -28,9 +28,9 @@ namespace SQLiteDirectoryDemo
 
             using (var db = new LiteDatabase(connectionString))
             {
-                LiteDbDirectory liteDbDirectory = new LiteDbDirectory(db);
                 try
                 {
+                    LiteDbDirectory liteDbDirectory = new LiteDbDirectory(db);
                     liteDbDirectory.CheckRequiredCollection();
                 }
                 catch (ConfigurationErrorsException e)
@@ -108,7 +108,7 @@ namespace SQLiteDirectoryDemo
 
         private static void IndexTempData(LiteDbDirectory directory)
         {
-            for (int outer = 0; outer < 102; outer++)
+            for (int outer = 0; outer < 10; outer++)
             {
                 IndexWriter indexWriter = null;
                 while (indexWriter == null)
@@ -173,7 +173,7 @@ namespace SQLiteDirectoryDemo
                 foreach (var hitsScoreDoc in hits.ScoreDocs)
                 {
                     var doc = searcher.IndexReader[hitsScoreDoc.Doc];
-                    Console.WriteLine("Book title: {0}", doc.GetValues("book-title")[0]);
+                    Console.WriteLine("Book title: {0}", doc.Get("Body")[0]);
                 }
             }
         }

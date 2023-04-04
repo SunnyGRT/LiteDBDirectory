@@ -19,8 +19,8 @@ namespace Lucene.Net.Store.LiteDbDirectory
     public sealed class LiteDbDirectory : Directory
     {
         private readonly LiteDatabase _db;
-        private readonly LiteCollection<FileMetaData> _fileMetaDataCollection;
-        private readonly LiteCollection<FileContent> _fileContenteCollection;
+        private readonly ILiteCollection<FileMetaData> _fileMetaDataCollection;
+        private readonly ILiteCollection<FileContent> _fileContenteCollection;
 
         private readonly ConcurrentDictionary<string, LiteDbIndexInput> _runningInputs = new ConcurrentDictionary<string, LiteDbIndexInput>();
         private readonly ConcurrentDictionary<string, LiteDbIndexOutput> _runningOutputs = new ConcurrentDictionary<string, LiteDbIndexOutput>();
@@ -76,14 +76,14 @@ namespace Lucene.Net.Store.LiteDbDirectory
             }
 
             var temp1 = db.GetCollection<FileContent>(LiteDbCollectionsInfo.FileContents);
-            temp1.Insert(new FileContent {Name = "1"});
-            temp1.Delete(f => f.Name == "1");
+            var tempValue = temp1.Insert(new FileContent {Name = "1"});
+            temp1.Delete(tempValue);
             var temp2 = db.GetCollection<FileMetaData>(LiteDbCollectionsInfo.FileMetaData);
-            temp2.Insert(new FileMetaData { Name = "1" });
-            temp2.Delete(f => f.Name == "1");
+            tempValue = temp2.Insert(new FileMetaData { Name = "1" });
+            temp2.Delete(tempValue);
             var temp3 = db.GetCollection<IndexFileLock>(LiteDbCollectionsInfo.FileLocks);
-            temp3.Insert(new IndexFileLock { Name = "1" });
-            temp3.Delete(f => f.Name == "1");
+            tempValue = temp3.Insert(new IndexFileLock { Name = "1" });
+            temp3.Delete(tempValue);
         }
 
         /// <summary>

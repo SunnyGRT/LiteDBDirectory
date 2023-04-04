@@ -25,7 +25,7 @@ namespace Lucene.Net.Store.LiteDbDirectory
             if (b.Length == 0)
                 return;
 
-            LiteFileInfo fileInfo = _db.FileStorage.FindById(_name);
+            LiteFileInfo<string> fileInfo = _db.FileStorage.FindById(_name);
 
 
             if (offset < _position)
